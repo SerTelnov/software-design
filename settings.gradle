@@ -1,3 +1,5 @@
 rootProject.name = 'software-design'
 
 include 'LRUCache'
+include 'testing-methods'
+
