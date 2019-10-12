@@ -1,4 +1,4 @@
-group 'com.telnov.software-design.LRUCache'
+group 'com.telnov.software-design'
 version '1.0-SNAPSHOT'
 
 dependencies {
