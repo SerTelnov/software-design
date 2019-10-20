@@ -1,20 +1,18 @@
 package servlet;
 
 import dao.ProductDao;
-import model.Product;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.util.List;
 
 /**
  * @author akirakozov
  */
 @ParametersAreNonnullByDefault
-public class QueryServlet extends HttpServlet {
+public class QueryServlet extends AbstractProductServlet {
 
     private final ProductDao dao;
 
@@ -23,9 +21,12 @@ public class QueryServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String command = request.getParameter("command");
+    protected void doRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        final String command = req.getParameter("command");
+        doCommand(command, resp);
+    }
 
+    private void doCommand(String command, HttpServletResponse response) throws IOException {
         switch (command) {
             case "max":
                 doMax(response);
@@ -42,63 +43,51 @@ public class QueryServlet extends HttpServlet {
             default:
                 response.getWriter().println("Unknown command: " + command);
         }
-
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 
-    private void doCount(HttpServletResponse response) {
-        try {
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("Number of products: ");
-
-            final int count = dao.countProducts();
-            response.getWriter().println(count);
-            response.getWriter().println("</body></html>");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private void doCount(HttpServletResponse response) throws IOException {
+        enrichResponseHttpInfo(
+                response,
+                List.of(
+                        "Number of products: ",
+                        Long.toString(dao.countProducts())
+                )
+        );
     }
 
-    private void doSum(HttpServletResponse response) {
-        try {
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("Summary price: ");
-
-            final long sum = dao.sumProductPrices();
-            response.getWriter().println(sum);
-
-            response.getWriter().println("</body></html>");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private void doSum(HttpServletResponse response) throws IOException {
+        enrichResponseHttpInfo(
+                response,
+                List.of(
+                        "Summary price: ",
+                        Long.toString(dao.sumProductPrices())
+                )
+        );
     }
 
-    private void doMin(HttpServletResponse response) {
-        try {
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("<h1>Product with min price: </h1>");
-
-            dao.findMinProduct().ifPresent(product -> uncheckedWrite(response, product));
-            response.getWriter().println("</body></html>");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private void doMin(HttpServletResponse response) throws IOException {
+        enrichResponseHttpInfo(
+                response,
+                dao.findMinProduct()
+                        .map(value -> List.of(
+                                "<h1>Product with min price: </h1>",
+                                value.toHttpString()
+                        )).orElseGet(() -> List.of(
+                        "<h1>Product with min price: </h1>"
+                ))
+        );
     }
 
     private void doMax(HttpServletResponse response) throws IOException {
-        response.getWriter().println("<html><body>");
-        response.getWriter().println("<h1>Product with max price: </h1>");
-
-        dao.findMaxProduct().ifPresent(product -> uncheckedWrite(response, product));
-        response.getWriter().println("</body></html>");
-    }
-
-    private void uncheckedWrite(HttpServletResponse response, Product product) {
-        try {
-            response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        enrichResponseHttpInfo(
+                response,
+                dao.findMaxProduct()
+                        .map(value -> List.of(
+                                "<h1>Product with max price: </h1>",
+                                value.toHttpString()
+                        )).orElseGet(() -> List.of(
+                        "<h1>Product with max price: </h1>"
+                ))
+        );
     }
 }

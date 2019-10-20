@@ -46,4 +46,9 @@ public class Product {
                 ", price=" + price +
                 '}';
     }
+
+    @Nonnull
+    public String toHttpString() {
+        return name + "\t" + price + "</br>";
+    }
 }

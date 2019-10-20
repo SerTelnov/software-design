@@ -4,7 +4,6 @@ import dao.ProductDao;
 import model.Product;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.io.IOException;
  * @author akirakozov
  */
 @ParametersAreNonnullByDefault
-public class AddProductServlet extends HttpServlet {
+public class AddProductServlet extends AbstractProductServlet {
 
     private final ProductDao dao;
 
@@ -23,7 +22,7 @@ public class AddProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         dao.insert(
                 new Product(
                         request.getParameter("name"),
@@ -32,7 +31,5 @@ public class AddProductServlet extends HttpServlet {
         );
 
         response.getWriter().println("OK");
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 }
