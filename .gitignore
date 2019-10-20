@@ -5,3 +5,5 @@ wrapper
 build
 lib/
 secret.properties
+
+*.db
