@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Nonnull;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class TodoListDaoInMemory implements TodoListDao {
 
     @Autowired
     public TodoListDaoInMemory() {
-        this.clock = Clock.systemDefaultZone();
+        this.clock = Clock.system(ZoneId.of("Europe/Moscow"));
         this.storage = new HashMap<>();
     }
 
@@ -56,6 +57,7 @@ public class TodoListDaoInMemory implements TodoListDao {
                 Todo.builder()
                         .setId(id)
                         .setName(entity.getName())
+                        .setDescription(entity.getDescription())
                         .setCreationTime(Instant.now(clock))
                         .setStatus(TodoStatus.BACKLOG)
                         .build()

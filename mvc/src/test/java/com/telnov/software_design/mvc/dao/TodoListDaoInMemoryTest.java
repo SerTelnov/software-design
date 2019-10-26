@@ -69,7 +69,7 @@ class TodoListDaoInMemoryTest extends FunctionalTest {
 
     @Test
     void addEntityTest() {
-        TodoDTO entity = new TodoDTO("TODO_1");
+        TodoDTO entity = new TodoDTO("TODO_1", "Description_1");
 
         dao.addTodo(entity);
         assertThat(storage).hasSize(1);

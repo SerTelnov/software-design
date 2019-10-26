@@ -59,12 +59,14 @@ class TodoListControllerTest extends FunctionalTest {
                 "  {" +
                 "    \"id\": 1," +
                 "    \"name\": \"TODO_1\"," +
+                "    \"description\": \"Description_1\"," +
                 "    \"creationTime\": \"2019-10-26T02:15:30Z\"," +
                 "    \"status\": \"BACKLOG\"" +
                 "  }," +
                 "  {" +
                 "    \"id\": 2," +
                 "    \"name\": \"TODO_2\"," +
+                "    \"description\": \"Description_2\"," +
                 "    \"creationTime\": \"2019-10-26T02:15:30Z\"," +
                 "    \"status\": \"BACKLOG\"" +
                 "  }" +
@@ -82,7 +84,7 @@ class TodoListControllerTest extends FunctionalTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        List<TodoDTO> requestBody = List.of(new TodoDTO("ToDo_DTO"));
+        List<TodoDTO> requestBody = List.of(new TodoDTO("ToDo_DTO", null));
         HttpEntity<List<TodoDTO>> entity = new HttpEntity<>(requestBody, headers);
 
         String url = getUriBuilder()

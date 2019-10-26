@@ -1,6 +1,7 @@
 package com.telnov.software_design.mvc.model;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.time.Instant;
 import java.util.Objects;
@@ -14,21 +15,26 @@ import java.util.Objects;
 public class Todo {
 
     /**
-     * To-do entity id.
+     * To-do id.
      */
     private final long id;
     /**
-     * To-do entity name.
+     * To-do name.
      */
     @Nonnull
     private final String name;
     /**
-     * To-do entity creation time
+     * To-do description.
+     */
+    @Nullable
+    private final String description;
+    /**
+     * To-do creation time
      */
     @Nonnull
     private final Instant creationTime;
     /**
-     * To-do entity status.
+     * To-do status.
      */
     @Nonnull
     private final TodoStatus status;
@@ -36,6 +42,7 @@ public class Todo {
     private Todo(Builder builder) {
         this.id = requirePositiveLong(builder.id, "id");
         this.name = Objects.requireNonNull(builder.name, "name");
+        this.description = builder.description;
         this.creationTime = Objects.requireNonNull(builder.creationTime, "creationTime");
         this.status = Objects.requireNonNull(builder.status, "status");
     }
@@ -43,6 +50,7 @@ public class Todo {
     private Todo(Todo that, TodoStatus status) {
         this.id = that.id;
         this.name = that.name;
+        this.description = that.description;
         this.creationTime = that.creationTime;
         this.status = status;
     }
@@ -61,6 +69,11 @@ public class Todo {
     @Nonnull
     public String getName() {
         return name;
+    }
+
+    @Nullable
+    public String getDescription() {
+        return description;
     }
 
     @Nonnull
@@ -85,17 +98,18 @@ public class Todo {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Todo)) return false;
         Todo todo = (Todo) o;
         return id == todo.id &&
                 name.equals(todo.name) &&
+                Objects.equals(description, todo.description) &&
                 creationTime.equals(todo.creationTime) &&
                 status == todo.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, creationTime, status);
+        return Objects.hash(id, name, description, creationTime, status);
     }
 
     @Override
@@ -103,6 +117,7 @@ public class Todo {
         return "Todo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", creationTime=" + creationTime +
                 ", status=" + status +
                 '}';
@@ -112,6 +127,7 @@ public class Todo {
 
         private Long id;
         private String name;
+        private String description;
         private Instant creationTime;
         private TodoStatus status;
 
@@ -122,6 +138,11 @@ public class Todo {
 
         public Builder setName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder setDescription(@Nullable String description) {
+            this.description = description;
             return this;
         }
 
