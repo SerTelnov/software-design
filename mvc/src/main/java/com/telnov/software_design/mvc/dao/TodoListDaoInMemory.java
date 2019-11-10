@@ -12,10 +12,7 @@ import javax.annotation.Nonnull;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Component
@@ -40,7 +37,7 @@ public class TodoListDaoInMemory implements TodoListDao {
     @Nonnull
     @Override
     public List<Todo> findTodoList() {
-        return List.copyOf(storage.values());
+        return Collections.unmodifiableList(new ArrayList<>(storage.values()));
     }
 
     @Nonnull
@@ -71,13 +68,13 @@ public class TodoListDaoInMemory implements TodoListDao {
     }
 
     @Override
-    public void markTodo(long entityId, TodoStatus status) {
+    public void markTodo(long entityId) {
         validateId(entityId);
 
         Todo todo = storage.get(entityId);
         storage.replace(
                 entityId,
-                todo.updateStatus(status)
+                todo.updateStatus()
         );
     }
 

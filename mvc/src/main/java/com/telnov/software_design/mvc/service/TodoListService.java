@@ -19,23 +19,19 @@ public class TodoListService {
         return todoListDao.findTodoList();
     }
 
-    public boolean notContainTodoId(final long entityId) {
-        return todoListDao.findTodoById(entityId).isEmpty();
-    }
-
     public TodoListService(TodoListDao todoListDao) {
         this.todoListDao = todoListDao;
     }
 
-    public void addTodo(List<TodoDTO> entities) {
-        entities.forEach(todoListDao::addTodo);
+    public void addTodo(TodoDTO entities) {
+        todoListDao.addTodo(entities);
     }
 
-    public void removeTodo(List<Long> entityIds) {
-        entityIds.forEach(todoListDao::removeTodo);
+    public void removeTodo(Long entityId) {
+        todoListDao.removeTodo(entityId);
     }
 
-    public void markTodo(final long entityId, TodoStatus status) {
-        todoListDao.markTodo(entityId, status);
+    public void markTodo(final long entityId) {
+        todoListDao.markTodo(entityId);
     }
 }

@@ -87,8 +87,8 @@ public class Todo {
     }
 
     @Nonnull
-    public Todo updateStatus(TodoStatus status) {
-        return new Todo(this, status);
+    public Todo updateStatus() {
+        return new Todo(this, status.changeStatus());
     }
 
     public static Builder builder() {

@@ -4,15 +4,14 @@ import com.telnov.software_design.mvc.model.Todo;
 import com.telnov.software_design.mvc.model.TodoDTO;
 import com.telnov.software_design.mvc.model.TodoStatus;
 import com.telnov.software_design.mvc.service.TodoListService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("api/todo")
+@Controller
 public class TodoListController {
 
     private final TodoListService service;
@@ -21,50 +20,36 @@ public class TodoListController {
         this.service = service;
     }
 
-    @GetMapping("/")
-    public List<Todo> getTodoList() {
-        return service.getTodoList();
+    @GetMapping("/todo-list")
+    public String getTodoList(Model model) {
+        prepareModelMap(model, service.getTodoList());
+        return "todo_list";
     }
 
-    @PostMapping("/add")
-    public void addTodoList(
-            @RequestBody
-            List<TodoDTO> todoList
-    ) {
-        service.addTodo(todoList);
-    }
-
-    @PostMapping("/remove")
-    public ResponseEntity<String> removeTodoList(
-            @RequestBody
-            List<Long> todoIds
-    ) {
-        List<Long> invalidIds = todoIds.stream()
-                .filter(service::notContainTodoId)
-                .collect(Collectors.toList());
-        if (!invalidIds.isEmpty()) {
-            return ResponseEntity.badRequest()
-                    .body("Invalid ids " +
-                            StringUtils.collectionToDelimitedString(invalidIds, ", ", "[", "]")
-                    );
+    @PostMapping("/add-todo")
+    public String addTodo(@ModelAttribute("todo") TodoDTO todo) {
+        if (!StringUtils.isEmpty(todo.getName()) &&
+            !StringUtils.isEmpty(todo.getDescription())
+        ) {
+            service.addTodo(todo);
         }
-
-        service.removeTodo(todoIds);
-        return ResponseEntity.ok().build();
+        return "redirect:/todo-list";
     }
 
-    @PostMapping("/mark")
-    public ResponseEntity<String> markTodo(
-            @RequestParam("id")
-            long id,
-            @RequestParam(name = "status", defaultValue = "DONE")
-            TodoStatus status
-    ) {
-        if (service.notContainTodoId(id)) {
-            return ResponseEntity.badRequest().body("Invalid id '" + id + "'");
-        }
+    @PostMapping("/remove-todo")
+    public String removeTodoList(@RequestParam("id") Long todoId) {
+        service.removeTodo(todoId);
+        return "redirect:/todo-list";
+    }
 
-        service.markTodo(id, status);
-        return ResponseEntity.ok().build();
+    @PostMapping("/mark-todo")
+    public String markTodo(@RequestParam("id") long id) {
+        service.markTodo(id);
+        return "redirect:/todo-list";
+    }
+
+    private void prepareModelMap(Model model, List<Todo> todoList) {
+        model.addAttribute("todo_entities", todoList);
+        model.addAttribute("todo", new TodoDTO());
     }
 }

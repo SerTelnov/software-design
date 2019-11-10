@@ -48,8 +48,7 @@ public interface TodoListDao {
     /**
      * Mark to-do entity as {@link TodoStatus#DONE}.
      *
-     * @param entityId to-do entity id
      * @throws InternalException if {@code entityId} don't exist
      */
-    void markTodo(final long entityId, TodoStatus status);
+    void markTodo(final long entityId);
 }

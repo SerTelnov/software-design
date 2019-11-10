@@ -64,7 +64,7 @@ class TodoListDaoInMemoryTest extends FunctionalTest {
     @Test
     void findTodoByIdNotFoundTest() {
         Optional<Todo> op = dao.findTodoById(1L);
-        assertThat(op.isEmpty()).isTrue();
+        assertThat(op.isPresent()).isFalse();
     }
 
     @Test

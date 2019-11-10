@@ -2,40 +2,33 @@ package com.telnov.software_design.mvc.model;
 
 import com.google.common.base.Objects;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.beans.ConstructorProperties;
-
-@ParametersAreNonnullByDefault
 public class TodoDTO {
 
-    @Nonnull
-    private final String name;
-    @Nullable
-    private final String description;
+    private String name;
+    private String description;
 
-    @ConstructorProperties({
-            "name",
-            "description"
-    })
-    public TodoDTO(
-            String name,
-            @Nullable
-            String description
-    ) {
+    public TodoDTO() {
+    }
+
+    public TodoDTO(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    @Nonnull
     public String getName() {
         return name;
     }
 
-    @Nullable
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

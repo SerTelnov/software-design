@@ -2,8 +2,10 @@ plugins {
     id 'org.springframework.boot' version '2.1.9.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'application'
+    id 'idea'
 }
 
+mainClassName="com.telnov.software_design.mvc.Application"
 group 'com.telnov.software-design'
 version '1.0-SNAPSHOT'
 
@@ -12,9 +14,9 @@ dependencies {
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter'
-    compile 'org.springframework.boot:spring-boot-starter-webflux'
-    compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
     compile 'com.google.guava:guava:28.1-jre'
 
     implementation 'org.springframework.boot:spring-boot-starter'
