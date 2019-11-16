@@ -2,12 +2,14 @@ package com.telnov.software_design.mvc.controller;
 
 import com.telnov.software_design.mvc.model.Todo;
 import com.telnov.software_design.mvc.model.TodoDTO;
-import com.telnov.software_design.mvc.model.TodoStatus;
 import com.telnov.software_design.mvc.service.TodoListService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

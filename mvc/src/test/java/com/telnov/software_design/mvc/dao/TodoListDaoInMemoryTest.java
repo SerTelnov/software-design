@@ -2,7 +2,6 @@ package com.telnov.software_design.mvc.dao;
 
 import com.telnov.software_design.mvc.FunctionalTest;
 import com.telnov.software_design.mvc.TestUtil;
-import com.telnov.software_design.mvc.exception.InternalException;
 import com.telnov.software_design.mvc.model.Todo;
 import com.telnov.software_design.mvc.model.TodoDTO;
 import com.telnov.software_design.mvc.model.TodoStatus;
@@ -96,14 +95,14 @@ class TodoListDaoInMemoryTest extends FunctionalTest {
         Todo entity = TestUtil.makeTodoEntity(1L);
         storage.put(1L, entity);
 
-        dao.markTodo(entity.getId(), TodoStatus.DONE);
+        dao.markTodo(entity.getId());
         assertThat(storage.get(1L))
                 .isEqualTo(TestUtil.makeTodoEntity(1L, TodoStatus.DONE));
     }
 
     @Test
     void markEntityNotFoundTest() {
-        assertThatThrownBy(() -> dao.markTodo(1L, TodoStatus.BACKLOG))
+        assertThatThrownBy(() -> dao.markTodo(1L))
                 .hasMessage("Can't find id '1'");
     }
 }
