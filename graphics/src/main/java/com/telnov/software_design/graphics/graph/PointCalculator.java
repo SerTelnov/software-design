@@ -2,10 +2,12 @@ package com.telnov.software_design.graphics.graph;
 
 import com.telnov.software_design.graphics.drawing.Point;
 
+import static com.telnov.software_design.graphics.drawing.DrawingUtils.CIRCLE_LENGTH;
+import static com.telnov.software_design.graphics.drawing.DrawingUtils.MARGIN;
+
 public class PointCalculator {
 
     private static final int NUMBER_OF_LINES = 4;
-    private static final double MARGIN = 100.0;
 
     private final int numberOfVertexOnLine;
     private final double coordDiff;
@@ -14,12 +16,17 @@ public class PointCalculator {
     private int currentVertexNumber;
 
     public PointCalculator(double width, double height, int numberOfVertex) {
-        double length = Math.min(width, height) - MARGIN * 2;
-        this.coordDiff = (length * 4) / numberOfVertex;
-        this.numberOfVertexOnLine = Math.max(1, numberOfVertex / NUMBER_OF_LINES);
+        double lineLength = Math.min(width, height) - MARGIN * 2;
+        this.numberOfVertexOnLine = (int) Math.ceil(((double) numberOfVertex) / NUMBER_OF_LINES);
+        this.coordDiff = lineLength / numberOfVertexOnLine;
 
         this.currentX = MARGIN;
         this.currentY = MARGIN;
+    }
+
+    public static Point calcCenterPoint(Point p) {
+        final double v = CIRCLE_LENGTH / 2;
+        return Point.of(p.x + v, p.y + v);
     }
 
     public Point nextPoint() {

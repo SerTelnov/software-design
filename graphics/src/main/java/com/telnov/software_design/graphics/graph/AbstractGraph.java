@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.telnov.software_design.graphics.drawing.DrawingUtils.CIRCLE_LENGTH;
+import static com.telnov.software_design.graphics.graph.PointCalculator.calcCenterPoint;
 
 public abstract class AbstractGraph {
 
@@ -39,7 +40,7 @@ public abstract class AbstractGraph {
 
         Point p = calculator.nextPoint();
         drawnVertices.put(info, p);
-        drawingApi.drawCircle(p, CIRCLE_LENGTH, CIRCLE_LENGTH);
+        drawingApi.drawCircle(p, CIRCLE_LENGTH / 2);
 
         return p;
     }
@@ -51,7 +52,7 @@ public abstract class AbstractGraph {
         Point p1 = drawVertex(edge.getFirst());
         Point p2 = drawVertex(edge.getSecond());
 
-        drawingApi.drawLine(p1, p2);
+        drawingApi.drawLine(calcCenterPoint(p1), calcCenterPoint(p2));
         drawnEdges.add(edge);
     }
 

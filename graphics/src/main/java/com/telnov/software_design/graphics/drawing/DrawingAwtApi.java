@@ -8,10 +8,10 @@ import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DrawingAwtApi implements DrawingApi {
+import static com.telnov.software_design.graphics.drawing.DrawingUtils.HEIGHT;
+import static com.telnov.software_design.graphics.drawing.DrawingUtils.WIDTH;
 
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 400;
+public class DrawingAwtApi implements DrawingApi {
 
     private final List<Shape> shapes;
 
@@ -30,8 +30,9 @@ public class DrawingAwtApi implements DrawingApi {
     }
 
     @Override
-    public void drawCircle(Point p, double width, double height) {
-        shapes.add(new Ellipse2D.Double(p.x, p.y, width, height));
+    public void drawCircle(Point p, double radius) {
+        double x = radius * 2;
+        shapes.add(new Ellipse2D.Double(p.x, p.y, x, x));
     }
 
     @Override
@@ -61,10 +62,31 @@ public class DrawingAwtApi implements DrawingApi {
         public void paint(Graphics g) {
             super.paint(g);
             Graphics2D g2 = (Graphics2D) g;
+            ColorFactory colorFactory = new ColorFactory();
             shapes.forEach(shape -> {
-                g2.setPaint(Color.BLACK);
-                g2.draw(shape);
+                if (shape instanceof Line2D.Double) {
+                    g2.setPaint(colorFactory.nextColor());
+                    g2.draw(shape);
+                } else {
+                    g2.setPaint(Color.BLACK);
+                    g2.fill(shape);
+                }
             });
+        }
+    }
+
+    private class ColorFactory {
+
+        private final Color[] LINE_COLORS = {
+                Color.LIGHT_GRAY, Color.BLUE, Color.ORANGE, Color.PINK, Color.YELLOW, Color.RED, Color.DARK_GRAY
+        };
+
+        private int colorIndex;
+
+        public Color nextColor() {
+            Color color = LINE_COLORS[colorIndex];
+            colorIndex = (colorIndex + 1) % LINE_COLORS.length;
+            return color;
         }
     }
 }

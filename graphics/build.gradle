@@ -1,3 +1,8 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
+
 group 'com.telnov.software-design'
 version '1.0-SNAPSHOT'
 
@@ -7,6 +12,14 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+    testCompile 'org.mockito:mockito-core:2.+'
+    testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls' ]
 }
 
 test {

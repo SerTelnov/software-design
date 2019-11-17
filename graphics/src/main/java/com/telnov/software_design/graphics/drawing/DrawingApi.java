@@ -6,7 +6,7 @@ public interface DrawingApi {
 
     double getDrawingAreaHeight();
 
-    void drawCircle(Point p, double width, double height);
+    void drawCircle(Point p, double radius);
 
     void drawLine(Point p1, Point p2);
 
