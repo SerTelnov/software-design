@@ -4,4 +4,5 @@ include 'LRUCache'
 include 'testing-methods'
 include 'refactoring'
 include 'mvc'
+include 'graphics'
 
