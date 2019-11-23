@@ -2,9 +2,11 @@ package com.telnov.software_design.graphics.graph;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 public class Vertex implements Iterable<Edge> {
@@ -15,6 +17,15 @@ public class Vertex implements Iterable<Edge> {
     public Vertex(VertexInfo info, List<VertexInfo> neighbors) {
         this.info = info;
         this.neighbors = neighbors;
+    }
+
+    public static Vertex of(final int vertexId, Collection<Integer> neighborIds) {
+        return new Vertex(
+                new VertexInfo(vertexId),
+                neighborIds.stream()
+                        .map(VertexInfo::new)
+                        .collect(Collectors.toList())
+        );
     }
 
     public VertexInfo getInfo() {

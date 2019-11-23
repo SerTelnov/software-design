@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PointCalculatorTest {
+class PointCalculatorTest {
 
     private PointCalculator pointCalculator;
 
@@ -76,7 +76,7 @@ public class PointCalculatorTest {
 
     @MethodSource("nextPointArgs")
     @ParameterizedTest(name = "{0} vertex")
-    public void testNextPoint(
+    void testNextPoint(
             int numberOfVertex,
             List<Point> expectedPoints
     ) {

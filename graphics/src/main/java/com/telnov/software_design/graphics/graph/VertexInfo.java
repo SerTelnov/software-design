@@ -35,4 +35,11 @@ public class VertexInfo {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "VertexInfo{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

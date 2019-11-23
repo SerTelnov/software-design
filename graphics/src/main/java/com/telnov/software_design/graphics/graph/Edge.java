@@ -29,6 +29,10 @@ public class Edge {
         );
     }
 
+    public static Edge of(int a, int b) {
+        return of(Integer.toString(a), Integer.toString(b));
+    }
+
     @Nonnull
     public VertexInfo getFirst() {
         return first;
