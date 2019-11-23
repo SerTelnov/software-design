@@ -5,4 +5,5 @@ include 'testing-methods'
 include 'refactoring'
 include 'mvc'
 include 'graphics'
+include 'calculator'
 
