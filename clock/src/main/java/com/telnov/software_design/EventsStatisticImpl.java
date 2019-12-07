@@ -56,7 +56,7 @@ public class EventsStatisticImpl implements EventsStatistic {
     @Override
     public void printStatistic() {
         getAllEventStatistic().forEach((time, name) ->
-                System.out.println("At " + time + " was event " + name)
+                System.out.println("At " + time + " was events " + String.join(", ", name))
         );
     }
 
