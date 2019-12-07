@@ -6,4 +6,5 @@ include 'refactoring'
 include 'mvc'
 include 'graphics'
 include 'calculator'
+include 'clock'
 
