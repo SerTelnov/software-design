@@ -22,7 +22,6 @@ public class TodoListDaoInMemory implements TodoListDao {
     private final Map<Long, Todo> storage;
     private final Clock clock;
 
-    @Autowired
     public TodoListDaoInMemory() {
         this.clock = Clock.system(ZoneId.of("Europe/Moscow"));
         this.storage = new HashMap<>();

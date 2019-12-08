@@ -3,7 +3,7 @@ package com.telnov.software_design.mvc.service;
 import com.telnov.software_design.mvc.dao.TodoListDao;
 import com.telnov.software_design.mvc.model.Todo;
 import com.telnov.software_design.mvc.model.TodoDTO;
-import com.telnov.software_design.mvc.model.TodoStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,12 +15,15 @@ public class TodoListService {
 
     private final TodoListDao todoListDao;
 
-    public List<Todo> getTodoList() {
-        return todoListDao.findTodoList();
+    public TodoListService(
+            @Qualifier("todoListDaoInMemory")
+            TodoListDao todoListDao
+    ) {
+        this.todoListDao = todoListDao;
     }
 
-    public TodoListService(TodoListDao todoListDao) {
-        this.todoListDao = todoListDao;
+    public List<Todo> getTodoList() {
+        return todoListDao.findTodoList();
     }
 
     public void addTodo(TodoDTO entities) {
