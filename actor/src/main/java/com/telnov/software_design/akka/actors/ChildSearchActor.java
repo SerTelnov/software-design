@@ -1,9 +1,9 @@
 package com.telnov.software_design.akka.actors;
 
-import akka.actor.UntypedActor;
+import akka.actor.AbstractActor;
 import com.telnov.software_design.akka.search.SearchClient;
 
-public class ChildSearchActor extends UntypedActor {
+public class ChildSearchActor extends AbstractActor {
 
     private final SearchClient searchClient;
 
@@ -13,10 +13,10 @@ public class ChildSearchActor extends UntypedActor {
     }
 
     @Override
-    public void onReceive(Object o) {
-        if (o instanceof String) {
-            final var msg = (String) o;
-            getSender().tell(searchClient.search(msg), getSender());
-        }
+    public Receive createReceive() {
+        return receiveBuilder()
+                .match(String.class, msg ->
+                        getSender().tell(searchClient.search(msg), getSender())
+                ).build();
     }
 }

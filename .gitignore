@@ -4,6 +4,7 @@ gradle
 wrapper
 build
 lib/
+out/
 secret.properties
 
 *.db

@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 public class SearchClientStub implements SearchClient {
 
-    private static final int NUMBER_OF_ITEM_IN_REQUEST = 15;
+    private static final int NUMBER_OF_ITEM_IN_REQUEST = 1;
 
     private final SearchAggregator searchAggregator;
 
@@ -18,7 +18,7 @@ public class SearchClientStub implements SearchClient {
         final var response = IntStream.range(0, NUMBER_OF_ITEM_IN_REQUEST)
                 .mapToObj(i -> new SearchResultItem(
                         generateUrl(i),
-                        generateTitle(i),
+                        generateTitle(i, searchRequest),
                         generateText(i)
                 )).collect(Collectors.toList());
 
@@ -29,8 +29,8 @@ public class SearchClientStub implements SearchClient {
         return String.format("http://url_number_%1$d/some/path/number/%1$d", index);
     }
 
-    private static String generateTitle(final int index) {
-        return "Some response title number " + index;
+    private static String generateTitle(final int index, final String txt) {
+        return "Some response title number " + index + " " + txt;
     }
 
     private static String generateText(final int index) {

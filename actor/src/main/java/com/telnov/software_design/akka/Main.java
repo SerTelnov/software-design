@@ -13,16 +13,17 @@ import static akka.pattern.PatternsCS.ask;
 
 public class Main {
 
+    private static final String EXIT_MSG = "EXIT";
+
     public static void main(String[] args) {
         ActorSystem system = ActorSystem.create("system");
-
         final var scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.print("Type your search request \n\n");
+            System.out.print("Type your search request\n\n");
             final var searchRequest = scanner.nextLine();
 
-            if (searchRequest.equals("EXIT")) {
+            if (searchRequest.equals(EXIT_MSG)) {
                 break;
             }
 
