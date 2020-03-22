@@ -8,4 +8,5 @@ include 'graphics'
 include 'calculator'
 include 'clock'
 include 'actor'
+include 'reactive-app'
 

@@ -6,9 +6,6 @@ plugins {
 
 mainClassName = 'com.telnov.software_design.testing_methods.Application'
 
-group 'com.telnov.software-design'
-version '1.0-SNAPSHOT'
-
 dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
