@@ -9,4 +9,5 @@ include 'calculator'
 include 'clock'
 include 'actor'
 include 'reactive-app'
+include 'event-sourcing'
 
